@@ -1,0 +1,17 @@
+C:\GitHub\Thief\bin\Debug\Thief.exe.config
+C:\GitHub\Thief\bin\Debug\Thief.exe
+C:\GitHub\Thief\bin\Debug\Thief.pdb
+C:\GitHub\Thief\obj\Debug\Thief.csproj.AssemblyReference.cache
+C:\GitHub\Thief\obj\Debug\Thief.csproj.SuggestedBindingRedirects.cache
+C:\GitHub\Thief\obj\Debug\Thief.Form1.resources
+C:\GitHub\Thief\obj\Debug\Thief.Properties.Resources.resources
+C:\GitHub\Thief\obj\Debug\Thief.csproj.GenerateResource.cache
+C:\GitHub\Thief\obj\Debug\Thief.csproj.CoreCompileInputs.cache
+C:\GitHub\Thief\obj\Debug\Thief.exe
+C:\GitHub\Thief\obj\Debug\Thief.pdb
+C:\GitHub\Thief\bin\Debug\NHotkey.dll
+C:\GitHub\Thief\bin\Debug\NHotkey.WindowsForms.dll
+C:\GitHub\Thief\bin\Debug\NHotkey.pdb
+C:\GitHub\Thief\bin\Debug\NHotkey.WindowsForms.pdb
+C:\GitHub\Thief\obj\Debug\Thief.csproj.CopyComplete
+C:\GitHub\Thief\bin\Debug\Gma.System.MouseKeyHook.dll
