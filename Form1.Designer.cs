@@ -45,6 +45,7 @@ namespace Thief
             this.button4 = new System.Windows.Forms.Button();
             this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.button5 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -132,9 +133,20 @@ namespace Thief
             this.trayMenu.Items.Add("Exit", null, Exit_Click);
             this.trayIcon.Visible = true;
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(266, 50);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(52, 24);
+            this.button5.TabIndex = 10;
+            this.button5.Text = "刷新";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(320, 350);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label1);
@@ -158,6 +170,7 @@ namespace Thief
         }
 
         #endregion
+
     }
 }
 

@@ -76,7 +76,7 @@ namespace Thief
         private const int SW_HIDE = 0;
         private const int SW_SHOW = 5;
 
-        private Button button1, button2, button3, button4;
+        private Button button1, button2, button3, button4, button5;
         private TextBox textBox1, textBox2, textBox3;
         private Label label1;
         private ListBox listBox1;
@@ -240,6 +240,11 @@ namespace Thief
                 listeningToHotkeys = false;
                 textBox3.Enabled = true;
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            FillWindowList();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
