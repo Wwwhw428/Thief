@@ -61,11 +61,22 @@ namespace Thief
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
-        #endregion 
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+        #endregion
 
         private const int HOTKEY_ID_1 = 1;
         private const int HOTKEY_ID_2 = 2;
         private const int HOTKEY_ID_3 = 3;
+
+        private const int HWND_TOPMOST = -1;
+        private const int HWND_NOTOPMOST = -2;
+        private const uint SWP_NOSIZE = 0x0001;
+        private const uint SWP_NOMOVE = 0x0002;
+        private const int WS_EX_TOPMOST = 0x00000008;
 
         private const uint MOD_ALT = 0x0001;
         private const uint LWA_ALPHA = 0x00000002;
@@ -76,7 +87,7 @@ namespace Thief
         private const int SW_HIDE = 0;
         private const int SW_SHOW = 5;
 
-        private Button button1, button2, button3, button4, button5;
+        private Button button1, button2, button3, button4, button5, button6;
         private TextBox textBox1, textBox2, textBox3;
         private Label label1;
         private ListBox listBox1;
@@ -245,6 +256,22 @@ namespace Thief
         private void button5_Click(object sender, EventArgs e)
         {
             FillWindowList();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (selectedWindowHandle != IntPtr.Zero)
+            {
+                bool isTopMost = IsTopMost(selectedWindowHandle);
+                IntPtr hWndInsertAfter = isTopMost ? new IntPtr(HWND_NOTOPMOST) : new IntPtr(HWND_TOPMOST);
+                SetWindowPos(selectedWindowHandle, hWndInsertAfter, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+            }
+        }
+
+        private bool IsTopMost(IntPtr hWnd)
+        {
+            int exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
+            return (exStyle & WS_EX_TOPMOST) == WS_EX_TOPMOST;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

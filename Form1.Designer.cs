@@ -46,6 +46,7 @@ namespace Thief
             this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -142,20 +143,31 @@ namespace Thief
             this.button5.Text = "刷新";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+            //
+            // button 6
+            //
+            this.button6.Location = new System.Drawing.Point(266, 80);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(52, 24);
+            this.button6.TabIndex = 10;
+            this.button6.Text = "置顶";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(320, 350);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button4);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button6);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
