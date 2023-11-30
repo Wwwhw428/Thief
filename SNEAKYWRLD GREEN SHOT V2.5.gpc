@@ -1,0 +1,363 @@
+
+/*░██████╗███╗░░██╗███████╗░█████╗░██╗░░██╗██╗░░░██╗  ░██╗░░░░░░░██╗██████╗░██╗░░░░░██████╗░
+██╔════╝████╗░██║██╔════╝██╔══██╗██║░██╔╝╚██╗░██╔╝  ░██║░░██╗░░██║██╔══██╗██║░░░░░██╔══██╗
+╚█████╗░██╔██╗██║█████╗░░███████║█████═╝░░╚████╔╝░  ░╚██╗████╗██╔╝██████╔╝██║░░░░░██║░░██║
+░╚═══██╗██║╚████║██╔══╝░░██╔══██║██╔═██╗░░░╚██╔╝░░  ░░████╔═████║░██╔══██╗██║░░░░░██║░░██║
+██████╔╝██║░╚███║███████╗██║░░██║██║░╚██╗░░░██║░░░  ░░╚██╔╝░╚██╔╝░██║░░██║███████╗██████╔╝
+╚═════╝░╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░  ░░░╚═╝░░░╚═╝░░╚═╝░░╚═╝╚══════╝╚═════╝░
+
+██████╗░██╗░░██╗██████╗░░░██╗██╗  ██╗░░░██╗░░███╗░░
+╚════██╗██║░██╔╝╚════██╗░██╔╝██║  ██║░░░██║░████║░░
+░░███╔═╝█████═╝░░░███╔═╝██╔╝░██║  ╚██╗░██╔╝██╔██║░░
+██╔══╝░░██╔═██╗░██╔══╝░░███████║  ░╚████╔╝░╚═╝██║░░
+███████╗██║░╚██╗███████╗╚════██║  ░░╚██╔╝░░███████╗
+╚══════╝╚═╝░░╚═╝╚══════╝░░░░░╚═╝  ░░░╚═╝░░░╚══════╝
+                            
+PLEASE IGNORE CATCH & SHOOT AND PULL UP JUMPER ARE NOT PROPERLY CONFIGURED YET, YOU CAN TEST FOR YOURSELF TO TRY AND GET IT WORKING.                                                                                                      
+
+OFFLINE VALUES FOR: Steph Curry Base & Marcus Smart Upper on Very Quick Timing  
+Jumpshot Value:      520 
+Right Fade Value:    701
+Catch & Shoot Value: 450
+
+GREEN LIGHT ON ZEN = ONLINE MODE
+NO LIGHT ON ZEN = OFFLINE MODE
+TO SWITCH BETWEEN THEM HOLD PAUSE BUTTON & DPAD DOWN AT THE SAME TIME
+
+YOUR VALUES WILL SAVE BETWEEN THE SWITCH TO OFFLINE AND ONLINE MODE 
+
+HOW TO ADJUST TIMING:
+your jump shot timing hold L2 and then d-pad 
+to do your catch-and-shoot hold L1 and then d-pad 
+to adjust your pull-up shots R2 and then d-pad 
+to adjust your fades R1 and then the d-pad 
+
+left and right d-pad are by 1 millisecond 
+up and down are by 5 milliseconds
+*/
+define FONT_LENGTH = 2; define SMALL_FONT = 0; define MEDIUM_FONT = 1; define FONT_WIDTH = 0; define FONT_HEIGHT = 1; const string LINE1 = "NBA 2K24"; const string LINE2 = "Green Shot";  const string LINE3 = "MADE BY"; const string LINE4 = "SNEAKYWRLD"  init { cls_oled(0);print( center_y(sizeof(LINE1) - 1, OLED_FONT_MEDIUM_WIDTH),5,OLED_FONT_MEDIUM,OLED_WHITE,LINE1[0]); print(center_y(sizeof(LINE2) - 1, OLED_FONT_MEDIUM_WIDTH),25,OLED_FONT_MEDIUM,OLED_WHITE,LINE2[0]); print(center_y(sizeof(LINE3) - 1, OLED_FONT_SMALL_WIDTH),45,OLED_FONT_SMALL,OLED_WHITE,LINE3[0]); print(center_y(sizeof(LINE4) - 1, OLED_FONT_SMALL_WIDTH),55,OLED_FONT_SMALL,OLED_WHITE,LINE4[0]);} 
+function center_y(f_chars,f_font){    return (OLED_WIDTH / 2) - ((f_chars * f_font) / 2);}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+//┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+int	Standing_Limit	= 50,/*-either 1 thru 99 This is how far the  left analog needs to be pressed in order to be considered moving-*/
+						 
+						 
+						 /*--*/Catch_Shoot_Timing 	= 400,///Must be a lower value than jumper		
+						 /*--*/Jumper_Timing 		= 520,///Must be a higher value than Catch and Shoot				
+						 /*--*/Fade_Shot_Timing 	= 700,///Must be a higher value than Pullup												
+//└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+	Index = 1,Moving,Online_Toggle;
+	unmap XB1_LB;define green = 17,off = 0;
+	const string TEXT [] = {"Jumper","Pullup","Catch_Shoot","Fade"}	
+	init
+	{
+		Catch_Shoot_Timing	= 	get_pvar(SPVAR_1,Catch_Shoot_Timing ,4000, Catch_Shoot_Timing);
+		Jumper_Timing		= 	get_pvar(SPVAR_2,Jumper_Timing 		,4000, Jumper_Timing);
+		Fade_Shot_Timing    = 	get_pvar(SPVAR_4,Fade_Shot_Timing 	,4000, Fade_Shot_Timing);
+		Online_Toggle		= 	get_pvar(SPVAR_5,0,2   , Online_Toggle);
+	}
+main
+{
+	if(get_val(XB360_LB) == 100 )
+    {
+   		 combo_run(x)
+    }
+}
+combo x
+{
+	set_val(XB1_X,100)
+}
+
+
+main{
+	vm_tctrl(-9);			
+		if(!Moving)
+		{
+			if(get_val(XB1_X))
+			{  				
+				block(XB1_X, Catch_Shoot_Timing); 
+				if(event_press(XB1_X))
+				{  
+					combo_run(CATCH_SHOOT); 
+				}
+				if(get_ptime(XB1_X) >= Jumper_Timing)
+				{
+					set_val(XB1_X,0);
+				}
+			}
+		}
+		if(Moving)
+		{
+			if(get_val(XB1_X))
+			{ 
+				
+				if(event_press(XB1_X))
+				{  
+					 
+				}
+				if(get_ptime(XB1_X) >= Fade_Shot_Timing)
+				{
+					set_val(XB1_X,0);
+				}
+			}
+		}
+	if(!Online_Toggle){
+					Led_Status(off);
+		if(get_val(XB1_MENU))
+		{	
+			if(event_press(XB1_DOWN))
+			{
+				Online_Toggle 			= TRUE;
+				Catch_Shoot_Timing 		= Catch_Shoot_Timing 		+ 150;
+				Jumper_Timing 			= Jumper_Timing 	  		+ 150;
+				Fade_Shot_Timing 		= Fade_Shot_Timing 		  	+ 150;
+				combo_run(SAVE);
+			}
+		}
+	}		
+	if(Online_Toggle){
+						Led_Status(green);
+	if(get_val(XB1_MENU))
+			{	
+				if(event_press(XB1_UP))
+				{
+					Online_Toggle 			= FALSE;
+					Catch_Shoot_Timing 		= Catch_Shoot_Timing 		- 150;
+					Jumper_Timing 			= Jumper_Timing 	  		- 150;
+					Fade_Shot_Timing 		= Fade_Shot_Timing 		  	- 150;
+					combo_run(SAVE);
+				}
+			}
+	}
+		 
+		if(abs(get_val(XB1_LX)) > Standing_Limit || abs(get_val(XB1_LY)) > Standing_Limit)
+		{
+			Moving = TRUE;
+		}
+		else
+		{
+			Moving = FALSE;
+		}
+		if(get_val(XB1_LT))
+		{ 	
+			set_val(XB1_LEFT,0);set_val(XB1_RIGHT,0);set_val(XB1_UP,0);set_val(XB1_DOWN,0);
+				if(event_press(XB1_LEFT)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[0]);//-- Display Script Title          
+					Jumper_Timing = Jumper_Timing - 1;
+					combo_run(SAVE);
+    				Display_Values(Jumper_Timing,FindDigits(Jumper_Timing));
+				}
+				if(event_press(XB1_RIGHT)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[0]);//-- Display Script Title          
+					Jumper_Timing = Jumper_Timing + 1;
+					combo_run(SAVE);
+    				Display_Values(Jumper_Timing,FindDigits(Jumper_Timing));
+				}
+				if(event_press(XB1_UP)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT) + 3, OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[0]);//-- Display Script Title          
+					Jumper_Timing = Jumper_Timing + 5;
+					combo_run(SAVE);
+    				Display_Values(Jumper_Timing,FindDigits(Jumper_Timing));
+				}
+				if(event_press(XB1_DOWN)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT) + 3, OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[0]);//-- Display Script Title          
+					Jumper_Timing = Jumper_Timing - 5;
+					combo_run(SAVE);
+    				Display_Values(Jumper_Timing,FindDigits(Jumper_Timing));
+				}
+		}
+		if(get_val(XB1_RT))
+		{
+			set_val(XB1_LEFT,0);set_val(XB1_RIGHT,0);set_val(XB1_UP,0);set_val(XB1_DOWN,0);
+				if(event_press(XB1_LEFT)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[1]);//-- Display Script Title          
+					
+					combo_run(SAVE);
+    				
+				}
+				if(event_press(XB1_RIGHT)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[1]);//-- Display Script Title          
+					combo_run(SAVE);
+				}
+				if(event_press(XB1_UP)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[1]);//-- Display Script Title          
+					combo_run(SAVE);
+				}
+				if(event_press(XB1_DOWN)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[1]);//-- Display Script Title          
+					combo_run(SAVE);
+				}
+		}
+		if(get_val(XB1_LB))
+		{ 	
+			set_val(XB1_LEFT,0);set_val(XB1_RIGHT,0);set_val(XB1_UP,0);set_val(XB1_DOWN,0);
+				if(event_press(XB1_LEFT)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[2]);//-- Display Script Title          
+					Catch_Shoot_Timing = Catch_Shoot_Timing - 1;
+					combo_run(SAVE);
+    				Display_Values(Catch_Shoot_Timing,FindDigits(Catch_Shoot_Timing));
+				}
+				if(event_press(XB1_RIGHT)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[2]);//-- Display Script Title          
+					Catch_Shoot_Timing = Catch_Shoot_Timing + 1;
+					combo_run(SAVE);
+    				Display_Values(Catch_Shoot_Timing,FindDigits(Catch_Shoot_Timing));
+				}
+				if(event_press(XB1_UP)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[2]);//-- Display Script Title          
+					Catch_Shoot_Timing = Catch_Shoot_Timing + 5;
+					combo_run(SAVE);
+    				Display_Values(Catch_Shoot_Timing,FindDigits(Catch_Shoot_Timing));
+				}
+				if(event_press(XB1_DOWN)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[2]);//-- Display Script Title          
+					Catch_Shoot_Timing = Catch_Shoot_Timing - 5;
+					combo_run(SAVE);
+    				Display_Values(Catch_Shoot_Timing,FindDigits(Catch_Shoot_Timing));
+				}
+		}
+		if(get_val(XB1_RB))
+		{ 	
+			set_val(XB1_LEFT,0);set_val(XB1_RIGHT,0);set_val(XB1_UP,0);set_val(XB1_DOWN,0);
+				if(event_press(XB1_LEFT)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[3]);//-- Display Script Title          
+					Fade_Shot_Timing 		= Fade_Shot_Timing - 1;
+					combo_run(SAVE);
+    				Display_Values(Fade_Shot_Timing,FindDigits(Fade_Shot_Timing));
+				}
+				if(event_press(XB1_RIGHT)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[3]);//-- Display Script Title          
+					Fade_Shot_Timing 		= Fade_Shot_Timing + 1;
+					combo_run(SAVE);
+    				Display_Values(Fade_Shot_Timing,FindDigits(Fade_Shot_Timing));
+				}
+				if(event_press(XB1_UP)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[3]);//-- Display Script Title          
+					Fade_Shot_Timing 		= Fade_Shot_Timing + 5;
+					combo_run(SAVE);
+    				Display_Values(Fade_Shot_Timing,FindDigits(Fade_Shot_Timing));
+				}
+				if(event_press(XB1_DOWN)) 
+				{
+					cls_oled(0);
+		    		printf(center_x(sizeof(TEXT)+ 3 , OLED_FONT_MEDIUM_WIDTH),43,OLED_FONT_MEDIUM,OLED_WHITE,TEXT[3]);//-- Display Script Title          
+					Fade_Shot_Timing 		= Fade_Shot_Timing - 5;
+					combo_run(SAVE);
+    				Display_Values(Fade_Shot_Timing,FindDigits(Fade_Shot_Timing));
+				}
+		}
+}
+combo SAVE{
+	set_rumble(RUMBLE_A,100);
+	wait(200);
+	reset_rumble();
+	set_pvar(SPVAR_1, Catch_Shoot_Timing);
+	set_pvar(SPVAR_2, Jumper_Timing);
+	set_pvar(SPVAR_4, Fade_Shot_Timing);
+	set_pvar(SPVAR_5, Online_Toggle);
+}
+combo CATCH_SHOOT{
+	set_val(XB1_X,100);
+	wait(Catch_Shoot_Timing);
+}	
+		
+function center_x(f_chars,f_font){                                                 
+    return (OLED_WIDTH * 2 ) - ((f_chars * f_font) * 2); //-- return X for Centering String Horizontally
+}   	
+function Display_Values(f_val,f_dgts) {
+    if(f_dgts >= 5)
+    {
+        putc_oled(Index,(f_val / 10000) + 48);
+        f_val %= 10000;
+        Index++;
+    }
+    if(f_dgts >= 4)
+    {
+        putc_oled(Index,(f_val / 1000) + 48);
+        f_val %= 1000;
+        Index++;
+    }
+    if(f_dgts >= 3)
+    {
+        putc_oled(Index,(f_val / 100) + 48);
+        f_val %= 100;
+        Index++;
+    }
+    if(f_dgts >= 2)
+    {
+        putc_oled(Index,(f_val / 10) + 48);
+        f_val %= 10;
+        Index++;
+    }
+    putc_oled(Index,f_val + 48);
+    puts_oled(1,1,2,Index,1);    
+    Index = 1;
+} 
+function FindDigits(f_num) {
+    f_num = abs(f_num);
+    	if(f_num /  10000 > 0) return 5;
+    	if(f_num /  1000 > 0) return 4;
+    	if(f_num /  100 > 0) return 3;
+    	if(f_num /   10 > 0) return 2;
+    	return 1;
+}
+function Led_Status(colour) {
+    set_led(LED_1, duint8(colour * 4));
+    set_led(LED_2, duint8((colour * 4) + 1));
+    set_led(LED_3, duint8((colour * 4) + 2));
+    set_led(LED_4, duint8((colour * 4) + 3));
+}
+data 					  
+(0,0,0,0,//-- Off	    
+1,0,0,0, //-- Dim Blue	  
+0,1,0,0, //-- Dim Red		  
+0,0,1,0, //-- Dim Green	
+0,0,0,1, //-- Dim Pink	
+1,0,1,0, //-- Dim SkyBlue	
+0,1,1,0, //-- Dim Yellow	
+1,1,1,0, //-- Dim White	
+2,0,0,0, //-- Blue		
+0,2,0,0, //-- Red			
+0,0,2,0, //-- Green		
+0,0,0,2, //-- Pink		
+2,0,2,0, //-- SkyBlue		
+0,2,2,0, //-- Yellow		
+2,2,2,0, //-- White		
+3,0,0,0, //-- Bright Blue	
+0,3,0,0, //-- Bright Red	
+0,0,3,0, //-- Bright Green
+0,0,0,3, //-- Bright Pink	
+3,0,3,0, //-- Bright SkyBlue
+0,3,3,0, //-- Bright Yellow
+3,3,3,0  //-- Bright white
+);		 ����������������
